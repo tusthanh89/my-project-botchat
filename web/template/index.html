@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat với Trợ Lý Ảo</title>
+    <style>
+        body { font-family: Arial; background: #f5f5f5; }
+        #chatbox { width: 400px; margin: 40px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #ccc; padding: 20px; }
+        .msg { margin: 10px 0; }
+        .user { color: #007bff; }
+        .bot { color: #28a745; }
+        #input { width: 80%; padding: 8px; }
+        #send { padding: 8px 16px; }
+    </style>
+</head>
+<body>
+    <div id="chatbox">
+        <h2>Test Chat</h2>
+        <div id="messages"></div>
+        <input id="input" type="text" placeholder="Nhập câu hỏi..." autofocus>
+        <button id="send">Gửi</button>
+    </div>
+    <script>
+        const input = document.getElementById('input');
+        const send = document.getElementById('send');
+        const messages = document.getElementById('messages');
+
+        send.onclick = sendMsg;
+        input.onkeydown = function(e) { if (e.key === 'Enter') sendMsg(); };
+
+        function appendMsg(text, cls) {
+            const div = document.createElement('div');
+            div.className = 'msg ' + cls;
+            div.textContent = text;
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+        }
+
+        function sendMsg() {
+            const text = input.value.trim();
+            if (!text) return;
+            appendMsg('Bạn: ' + text, 'user');
+            input.value = '';
+            fetch('http://127.0.0.1:5000/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: text })
+            })
+            .then(res => res.json())
+            .then(data => appendMsg('Bot: ' + data.answer, 'bot'));
+        }
+    </script>
+</body>
+</html>

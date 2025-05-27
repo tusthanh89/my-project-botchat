@@ -1,0 +1,1 @@
+Học máy (Machine Learning) là một nhánh của AI, cho phép máy tính học từ dữ liệu mà không cần lập trình rõ ràng.
