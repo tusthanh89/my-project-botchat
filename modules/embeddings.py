@@ -1,7 +1,7 @@
 from document_loader import load_documents_from_folder
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-from langchain_community.vectorstores import Chroma
+from langchain_chroma import Chroma
 import os
 from dotenv import load_dotenv
 
